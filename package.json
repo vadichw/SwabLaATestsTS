@@ -1,0 +1,22 @@
+{
+  "name": "swablaateststs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vadichw/SwabLaATestsTS.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vadichw/SwabLaATestsTS/issues"
+  },
+  "homepage": "https://github.com/vadichw/SwabLaATestsTS#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^22.10.2"
+  }
+}
