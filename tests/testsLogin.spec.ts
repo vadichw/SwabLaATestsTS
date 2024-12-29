@@ -4,7 +4,7 @@ import { MainPage } from './mainPage';
 
 test('login with valid data', async ({ page, request }) => {
   const loginPage = new LoginPage(page);
-  const mainPage = new MainPage(page)
+  const mainPage = new MainPage(page);
   await loginPage.goto();
   await loginPage.fillDataInFields("standard_user", "secret_sauce");
   await loginPage.clickButtonLogin();
