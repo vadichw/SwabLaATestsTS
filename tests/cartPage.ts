@@ -11,7 +11,7 @@ export class CartPage {
         this.cartItemPrice = page.locator("//div[@class='cart_item']//div[@class='inventory_item_price']");
     }
 
-    async goto() {
+    async gotoCart() {
         await this.page.click("//a[@class='shopping_cart_link']");
     }
 

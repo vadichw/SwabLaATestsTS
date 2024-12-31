@@ -11,17 +11,13 @@ test('Add to cart item', async ({ page }) => {
     await loginPage.goto();
     await loginPage.login("standard_user", "secret_sauce");
 
-    // Добавление товара в корзину
     await mainPage.addItemToCard();
 
-    // Получение данных о товаре
     const actualNameItem = await mainPage.getActualNameItem();
     const actualPriceItem = await mainPage.getActualPriceItem();
 
-    // Переход в корзину
-    await cartPage.goto();
+    await cartPage.gotoCart();
 
-    // Проверка данных в корзине
     await cartPage.assertNameAndPriceItem(actualNameItem, actualPriceItem);
 });
 
