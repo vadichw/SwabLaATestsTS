@@ -19,16 +19,12 @@ export class LoginPage {
     await this.page.goto('https://www.saucedemo.com/');
   }
 
-  async fillDataInFields(username: string, password: string) {
+  async login(username: string, password: string) {
     await this.loginField.fill(username);
     await this.passwordField.fill(password);
-  }
-
-  async clickButtonLogin() {
     await this.buttonLogin.click();
   }
 
-  
   async checkErrorMsg(expectedErrorText) {
     await this.errorMessage.isVisible();
     const actualErrorText = await this.errorMessage.textContent();

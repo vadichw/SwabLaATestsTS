@@ -6,8 +6,7 @@ test('login with valid data', async ({ page, request }) => {
   const loginPage = new LoginPage(page);
   const mainPage = new MainPage(page);
   await loginPage.goto();
-  await loginPage.fillDataInFields("standard_user", "secret_sauce");
-  await loginPage.clickButtonLogin();
+  await loginPage.login("standard_user", "secret_sauce");
 
   const currentUrl = page.url();
   const response = await request.get(currentUrl);
@@ -21,8 +20,7 @@ test('login with invalid username', async ({page, request}) => {
   const expectedErrorText = "Epic sadface: Username and password do not match any user in this service";
   
   await loginPage.goto();
-  await loginPage.fillDataInFields("invalidname", "secret_sauce");
-  await loginPage.clickButtonLogin();
+  await loginPage.login("invalidname", "secret_sauce");
   await loginPage.checkErrorMsg(expectedErrorText);
 
   const currentUrl = page.url();
