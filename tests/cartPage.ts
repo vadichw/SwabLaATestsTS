@@ -13,7 +13,6 @@ export class CartPage {
 
     async goto() {
         await this.page.click("//a[@class='shopping_cart_link']");
-        await this.page.waitForSelector("//div[@class='cart_list']"); // Убедиться, что корзина загрузилась
     }
 
     async assertNameAndPriceItem(expectedName: string, expectedPrice: string) {
