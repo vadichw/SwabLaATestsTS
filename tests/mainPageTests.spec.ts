@@ -4,7 +4,7 @@ import { MainPage } from './mainPage';
 import { CartPage } from './cartPage';
 import { OrdersPage } from './ordersPage';
 
-test('Add to cart item', async ({ page }) => {
+test('Make an order', async ({ page }) => {
     const mainPage = new MainPage(page);
     const loginPage = new LoginPage(page);
     const cartPage = new CartPage(page);
@@ -29,6 +29,8 @@ test('Add to cart item', async ({ page }) => {
     await ordersPage.assertItemsInOrder(actualNameItem, actualPriceItem);
 
     await ordersPage.checkPriceItemWithTax(actualPriceItem);
+    await ordersPage.finishOrder("Thank you for your order!");
+    await ordersPage.backToHomePage("https://www.saucedemo.com/inventory.html");
 });
 
 

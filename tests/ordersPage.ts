@@ -10,6 +10,9 @@ export class OrdersPage {
     readonly priceItemInOrders: Locator;
     readonly taxField: Locator;
     readonly totalPrice: Locator;
+    readonly finishButton: Locator;
+    readonly textAfterFinishingOrder: Locator;
+    readonly backTHomeButton: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -21,6 +24,9 @@ export class OrdersPage {
         this.priceItemInOrders = page.locator("//div[@data-test='inventory-item-price']");
         this.taxField = page.locator("//div[@data-test='tax-label']");
         this.totalPrice = page.locator("//div[@data-test='total-label']");
+        this.finishButton = page.locator("//button[@data-test='finish']");
+        this.textAfterFinishingOrder = page.locator("//h2[@data-test='complete-header']");
+        this.backTHomeButton = page.locator("//button[@data-test='back-to-products']");
     }
 
     async fillDataForOrder(firstName: string, lastName: string, code: string) {
@@ -43,15 +49,26 @@ export class OrdersPage {
 
     async checkPriceItemWithTax(priceItem) {
         const tax = (await this.taxField.textContent())?.trim() ?? "";
-        let taxNum = parseFloat(tax);
-
         const actualPriceItemInOrder = (await this.priceItemInOrders.textContent())?.trim() ?? "";
-        let priceNum = parseFloat(actualPriceItemInOrder);
-
         const priceWithTax = (await this.totalPrice.textContent())?.trim() ?? "";
-        let totalSumNum = parseFloat(priceWithTax);
+    
+        const taxNum = parseFloat(tax.replace(/[^0-9.]/g, ""));
+        const priceNum = parseFloat(actualPriceItemInOrder.replace(/[^0-9.]/g, ""));
+        const totalSumNum = parseFloat(priceWithTax.replace(/[^0-9.]/g, ""));
+    
+        expect(priceNum + taxNum).toBeCloseTo(totalSumNum, 2);
+    }    
 
-        expect(priceNum + taxNum).toBe(totalSumNum);
+    async finishOrder(expectedFinishingText: string) {
+        await this.finishButton.click();
+        const actualFinishingText = (await this.textAfterFinishingOrder.textContent())?.trim() ?? "";
+        expect(expectedFinishingText).toBe(actualFinishingText);
+    }
 
+    async backToHomePage(expectedURL: string) {
+        await this.backTHomeButton.click();
+
+        const currentURL = await this.page.url();
+        expect(expectedURL).toBe(currentURL);
     }
 }
