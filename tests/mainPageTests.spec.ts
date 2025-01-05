@@ -3,6 +3,7 @@ import { LoginPage } from './loginPage';
 import { MainPage } from './mainPage';
 import { CartPage } from './cartPage';
 import { OrdersPage } from './ordersPage';
+import { getLoginData } from '../utils';
 
 test('Make an order', async ({ page }) => {
     const mainPage = new MainPage(page);
@@ -10,8 +11,10 @@ test('Make an order', async ({ page }) => {
     const cartPage = new CartPage(page);
     const ordersPage = new OrdersPage(page);
 
+    const loginData = getLoginData();
+
     await loginPage.goto();
-    await loginPage.login("standard_user", "secret_sauce");
+    await loginPage.login(loginData.email, loginData.password);
 
     await mainPage.addItemToCard();
 
