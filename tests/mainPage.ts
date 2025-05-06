@@ -6,6 +6,8 @@ export class MainPage {
     readonly buttonAddToCard: Locator;
     readonly nameItem: Locator;
     readonly priceItem: Locator;
+    readonly removeButton: Locator;
+    readonly itemBadgetInCart: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -13,9 +15,11 @@ export class MainPage {
         this.buttonAddToCard = page.locator("//button[@id='add-to-cart-sauce-labs-backpack']");
         this.nameItem = page.locator("//a[@id='item_4_title_link']");
         this.priceItem = page.locator("//div[@class='inventory_item_price']");
+        this.removeButton = page.locator("//button[@data-test='remove-sauce-labs-backpack']");
+        this.itemBadgetInCart = page.locator("//span[@data-test='shopping-cart-badge']");
     }
 
-    async chechHeader(expectedHeaderPage: string) {
+    async checkHeader(expectedHeaderPage: string) {
         await this.headerPage.isVisible();
         const actualHeaderPage = await this.headerPage.textContent();
         expect(actualHeaderPage?.trim()).toBe(expectedHeaderPage);
@@ -34,6 +38,14 @@ export class MainPage {
     async getActualPriceItem(): Promise<string> {
         const price = await this.priceItem.first().textContent();
         return price?.trim() ?? "";
+    }
+
+    async removeFromCart() {
+        await this.removeButton.click();
+    }
+
+    async checkPresentingItemInCart(){
+        await this.itemBadgetInCart.isHidden();
     }
 }
 

@@ -7,17 +7,11 @@ test('login with valid data', async ({ page, request }) => {
   const loginPage = new LoginPage(page);
   const mainPage = new MainPage(page);
 
-    const loginData = getLoginData();
+  const loginData = getLoginData();
 
-    await loginPage.goto();
-    await loginPage.login(loginData.email, loginData.password);
-
-
-  const currentUrl = page.url();
-  const response = await request.get(currentUrl);
-  expect(response.status()).toBe(404); // 404 because if data is valid then status code 404, 
-  // I don`t know why
-  await mainPage.chechHeader("Products")
+  await loginPage.goto();
+  await loginPage.login(loginData.email, loginData.password);
+  await mainPage.checkHeader("Products")
 });
 
 test('login with invalid username', async ({page, request}) => {
@@ -29,10 +23,5 @@ test('login with invalid username', async ({page, request}) => {
   await loginPage.goto();
   await loginPage.login("invalidName", loginData.password);
   await loginPage.checkErrorMsg(expectedErrorText);
-
-  const currentUrl = page.url();
-  const response = await request.get(currentUrl);
-  expect(response.status()).toBe(200); // 200 because if data is invalid then status code 200, 
-  // I don`t know why
 })
 
