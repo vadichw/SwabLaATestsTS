@@ -11,6 +11,7 @@ export class CartPage {
         this.cartItemName = page.locator("//div[@class='cart_item']//div[@class='inventory_item_name']");
         this.cartItemPrice = page.locator("//div[@class='cart_item']//div[@class='inventory_item_price']");
         this.checkoutButton = page.locator("//button[@id='checkout']");
+
     }
 
     async gotoCart() {
@@ -28,4 +29,6 @@ export class CartPage {
     async clickCheckoutButton() {
         await this.checkoutButton.click();
     }
+
+
 }
