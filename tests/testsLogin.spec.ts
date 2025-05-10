@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from './loginPage';
-import { MainPage } from './mainPage';
+import { LoginPage } from '../pageObjects/loginPage';
+import { MainPage } from '../pageObjects/mainPage';
 import { getLoginData } from '../utils';
 
 test('login with valid data', async ({ page, request }) => {

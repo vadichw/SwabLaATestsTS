@@ -7,7 +7,7 @@ export class MainPage {
     readonly nameItem: Locator;
     readonly priceItem: Locator;
     readonly removeButton: Locator;
-    readonly itemBadgetInCart: Locator;
+    readonly itemBadgeInCart: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -16,7 +16,7 @@ export class MainPage {
         this.nameItem = page.locator("//a[@id='item_4_title_link']");
         this.priceItem = page.locator("//div[@class='inventory_item_price']");
         this.removeButton = page.locator("//button[@data-test='remove-sauce-labs-backpack']");
-        this.itemBadgetInCart = page.locator("//span[@data-test='shopping-cart-badge']");
+        this.itemBadgeInCart = page.locator("//span[@data-test='shopping-cart-badge']");
     }
 
     async checkHeader(expectedHeaderPage: string) {
@@ -43,9 +43,12 @@ export class MainPage {
     async removeFromCart() {
         await this.removeButton.click();
     }
+    async checkItemIsIAdded(){
+        await this.itemBadgeInCart.isVisible();
+    }
 
     async checkPresentingItemInCart(){
-        await this.itemBadgetInCart.isHidden();
+        await this.itemBadgeInCart.isHidden();
     }
 }
 

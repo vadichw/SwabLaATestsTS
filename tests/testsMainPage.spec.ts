@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from './loginPage';
-import { MainPage } from './mainPage';
-import { CartPage } from './cartPage';
-import { OrdersPage } from './ordersPage';
+import { LoginPage } from '../pageObjects/loginPage';
+import { MainPage } from '../pageObjects/mainPage';
+import { CartPage } from '../pageObjects/cartPage';
+import { OrdersPage } from '../pageObjects/ordersPage';
 import { getLoginData } from '../utils';
 
 test('Make an order', async ({ page }) => {
@@ -47,6 +47,7 @@ test("Remove item from cart", async ({ page }) => {
     await loginPage.login(loginData.email, loginData.password);
 
     await mainPage.addItemToCard();
+    await mainPage.checkItemIsIAdded();
 
     await mainPage.removeFromCart();
     await mainPage.checkPresentingItemInCart();
