@@ -1,20 +1,10 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pageObjects/loginPage';
-import { MainPage } from '../pageObjects/mainPage';
-import { CartPage } from '../pageObjects/cartPage';
-import { OrdersPage } from '../pageObjects/ordersPage';
-import { getLoginData } from '../utils';
+import { users } from '../usersCollection';
+import { test } from '../fixtures/customFixtures'; 
 
-test('Make an order', async ({ page }) => {
-    const mainPage = new MainPage(page);
-    const loginPage = new LoginPage(page);
-    const cartPage = new CartPage(page);
-    const ordersPage = new OrdersPage(page);
-
-    const loginData = getLoginData();
+test('Make an order', async ({ loginPage, mainPage, cartPage, ordersPage }) => {
 
     await loginPage.goto();
-    await loginPage.login(loginData.email, loginData.password);
+    await loginPage.login(users.standard.login, users.standard.password);
 
     await mainPage.addItemToCard();
 
@@ -36,15 +26,10 @@ test('Make an order', async ({ page }) => {
     await ordersPage.backToHomePage("https://www.saucedemo.com/inventory.html");
 });
 
-test("Remove item from cart", async ({ page }) => {
-    const mainPage = new MainPage(page);
-    const loginPage = new LoginPage(page);
-    const cartPage = new CartPage(page);
-
-    const loginData = getLoginData();
+test("Remove item from cart", async ({ loginPage, mainPage, }) => {
 
     await loginPage.goto();
-    await loginPage.login(loginData.email, loginData.password);
+    await loginPage.login(users.standard.login, users.standard.password);
 
     await mainPage.addItemToCard();
     await mainPage.checkItemIsIAdded();

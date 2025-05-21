@@ -1,27 +1,29 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pageObjects/loginPage';
-import { MainPage } from '../pageObjects/mainPage';
-import { getLoginData } from '../utils';
+import { test} from '../fixtures/customFixtures';
+import { users } from '../usersCollection';
 
-test('login with valid data', async ({ page, request }) => {
-  const loginPage = new LoginPage(page);
-  const mainPage = new MainPage(page);
-
-  const loginData = getLoginData();
+test('login with valid data', async ({ loginPage, mainPage }) => {
 
   await loginPage.goto();
-  await loginPage.login(loginData.email, loginData.password);
-  await mainPage.checkHeader("Products")
+  await loginPage.login(users.standard.login, users.standard.password);
+  await mainPage.checkHeader("Products");
 });
 
-test('login with invalid username', async ({page, request}) => {
-  const loginPage = new LoginPage(page);
+// Negative test: login with invalid username
+test('login with invalid username', async ({ loginPage }) => {
+
   const expectedErrorText = "Epic sadface: Username and password do not match any user in this service";
-  
-  const loginData = getLoginData();
 
   await loginPage.goto();
-  await loginPage.login("invalidName", loginData.password);
+  await loginPage.login("invalidName", users.standard.password);
   await loginPage.checkErrorMsg(expectedErrorText);
-})
+});
 
+// Negative test: login with invalid password
+test('login with invalid password', async ({ loginPage }) => {
+
+  const expectedErrorText = "Epic sadface: Username and password do not match any user in this service";
+
+  await loginPage.goto();
+  await loginPage.login(users.standard.login, "invalidPassword");
+  await loginPage.checkErrorMsg(expectedErrorText);
+});
