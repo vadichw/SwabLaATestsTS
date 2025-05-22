@@ -1,12 +1,10 @@
-import fs from "fs";
+import * as dotenv from 'dotenv';
+dotenv.config();
 
-export function getLoginData() {
-    const filePath = "login-data.json";
-    const rawData = fs.readFileSync(filePath);
-    const JSONData = JSON.parse(rawData.toString());
-
-    return {
-        email: JSONData.email as string,
-        password: JSONData.password as string,
-    };
+export function getEnvVar(name: string): string {
+  const value = process.env[name];
+  if (!value) {
+    throw new Error(`Missing required env variable: ${name}`);
+  }
+  return value;
 }

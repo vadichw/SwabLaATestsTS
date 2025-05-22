@@ -1,10 +1,11 @@
 import { users } from '../usersCollection';
-import { test } from '../fixtures/customFixtures'; 
+import { test } from '../fixtures/customFixtures';
+import { getEnvVar } from '../utils';
 
 test('Make an order', async ({ loginPage, mainPage, cartPage, ordersPage }) => {
 
     await loginPage.goto();
-    await loginPage.login(users.standard.login, users.standard.password);
+    await loginPage.login(users.standard.login, getEnvVar('STANDARD_USER_PASS'));
 
     await mainPage.addItemToCard();
 
@@ -29,7 +30,7 @@ test('Make an order', async ({ loginPage, mainPage, cartPage, ordersPage }) => {
 test("Remove item from cart", async ({ loginPage, mainPage, }) => {
 
     await loginPage.goto();
-    await loginPage.login(users.standard.login, users.standard.password);
+    await loginPage.login(users.standard.login, getEnvVar('STANDARD_USER_PASS'));
 
     await mainPage.addItemToCard();
     await mainPage.checkItemIsIAdded();
